@@ -100,7 +100,7 @@ namespace MISA.AMIS.Infrastructure
         public IEnumerable<T> Get()
         {
             //Lấy dữ liệu 
-            var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}", commandType: CommandType.StoredProcedure);
+            var entities = _dbConnection.Query<T>($"Proc_Get{_tableName}s", commandType: CommandType.StoredProcedure);
             return entities;
         }
 

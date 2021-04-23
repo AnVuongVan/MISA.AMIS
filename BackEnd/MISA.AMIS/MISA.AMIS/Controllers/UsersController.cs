@@ -1,4 +1,5 @@
-﻿using MISA.AMIS.Core.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
 
 namespace MISA.AMIS.Controllers
@@ -14,6 +15,13 @@ namespace MISA.AMIS.Controllers
         public UsersController(IUserService userService): base(userService)
         {
             this._userService = userService;
+        }
+
+        [HttpPost("{login}")]
+        public IActionResult Authenticate(User user)
+        {
+            var token = _userService.Authenticate(user.UserName, user.Password);
+            return Ok(token);
         }
     }
 }

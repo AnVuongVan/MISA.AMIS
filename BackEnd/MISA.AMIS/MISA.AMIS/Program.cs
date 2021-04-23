@@ -20,7 +20,8 @@ namespace MISA.AMIS
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                    .UseUrls("https://localhost:44317/api/v1");
                 });
     }
 }

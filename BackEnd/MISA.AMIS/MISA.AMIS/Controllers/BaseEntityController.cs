@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MISA.AMIS.Core.Enums;
 using MISA.AMIS.Core.Interfaces;
 using System;
@@ -23,6 +24,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = nameof(PermissionAction.READ))]
         public IActionResult Get()
         {
             var entities = _baseService.Get();
@@ -30,6 +32,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = nameof(PermissionAction.READ))]
         public IActionResult Get(string id)
         {
             var entity = _baseService.GetById(Guid.Parse(id));
@@ -37,6 +40,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(PermissionAction.CREATE))]
         public IActionResult Post(T t)
         {
             var serviceResult = _baseService.Add(t);
@@ -46,6 +50,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = nameof(PermissionAction.UPDATE))]
         public IActionResult Put([FromRoute] string id, T t)
         {
             var keyProperty = t.GetType().GetProperty($"{typeof(T).Name}Id");
@@ -69,6 +74,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = nameof(PermissionAction.DELETE))]
         public IActionResult Delete(string id)
         {
             var rowEffects = _baseService.Delete(Guid.Parse(id));
