@@ -1,0 +1,12 @@
+.modal {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.modal-footer>button {
+    font-weight: 600;
+}
+
+.row-item .bi {
+    cursor: pointer;
+}
