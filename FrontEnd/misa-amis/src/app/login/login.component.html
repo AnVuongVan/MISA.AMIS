@@ -1,0 +1,33 @@
+<div class="m-modal">
+    <div class="m-modal-login">
+        <div class="login-header">
+            <div class="login-form-header"></div>
+        </div>
+
+        <div class="login-content">
+            <form #formLogin="ngForm" autocomplete="off" (submit)="onSubmit(formLogin)">
+                <div class="login-form-content">
+                    <div class="wrap-input">
+                        <input type="text" #UserName="ngModel" name="UserName" 
+                        [(ngModel)]="formModel.UserName" required 
+                        class="input-control" placeholder="Tên đăng nhập" />
+                    </div>
+                    <div class="wrap-input">
+                        <input type="password" #Password="ngModel" name="Password"
+                        [(ngModel)]="formModel.Password" required
+                        class="input-control" placeholder="Mật khẩu">
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="forgot-password">Quên mật khẩu?</span>
+                </div>
+                <button type="submit" [disabled]="formLogin.invalid" class="login-btn">Đăng nhập</button>
+            </form>
+
+            <div class="register-block">
+                <span>Chưa có tài khoản?</span>
+                <a class="register-btn">Đăng ký</a>
+            </div>
+        </div>
+    </div>
+</div>

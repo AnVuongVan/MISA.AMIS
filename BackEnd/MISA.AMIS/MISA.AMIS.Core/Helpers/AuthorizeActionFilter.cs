@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using MISA.AMIS.Core.Enums;
 
 namespace MISA.AMIS.Core.Helpers
 {
-    public class AuthorizeActionFilter: IAuthorizationFilter
+    public class AuthorizeActionFilter : IAuthorizationFilter
     {
-        private readonly PermissionEntity _entity;
+        /*private readonly PermissionEntity _entity;
         private readonly PermissionAction _action;
 
         public AuthorizeActionFilter(PermissionEntity entity, PermissionAction action)
@@ -24,6 +23,10 @@ namespace MISA.AMIS.Core.Helpers
             {
                 context.Result = new ForbidResult();
             }
+        }*/
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

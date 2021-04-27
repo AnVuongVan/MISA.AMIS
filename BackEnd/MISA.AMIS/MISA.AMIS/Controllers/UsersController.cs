@@ -21,7 +21,10 @@ namespace MISA.AMIS.Controllers
         public IActionResult Authenticate(User user)
         {
             var token = _userService.Authenticate(user.UserName, user.Password);
-            return Ok(token);
+
+            if (token == string.Empty)
+                return BadRequest(new { message = "Tên đăng nhập hoặc mật khẩu không đúng." });
+            return Ok(new { token });
         }
     }
 }

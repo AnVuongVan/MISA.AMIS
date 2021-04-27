@@ -1,5 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MISA.AMIS.Core.Entities;
+using MISA.AMIS.Core.Helpers;
 using MISA.AMIS.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,12 @@ namespace MISA.AMIS.Core.Services
     {
         IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository): base(userRepository)
+        private readonly AppSettings _appSettings;
+
+        public UserService(IUserRepository userRepository, IOptions<AppSettings> appSettings) : base(userRepository)
         {
             this._userRepository = userRepository;
+            this._appSettings = appSettings.Value;
         }
 
         public string Authenticate(string userName, string password)
@@ -28,7 +33,7 @@ namespace MISA.AMIS.Core.Services
 
             // trả về null nếu không tìm thấy người dùng
             if (user == null)
-                return "Username or password is invalid!";
+                return "";
 
             return GenerateJSONWebToken(user);   
         }
@@ -52,17 +57,17 @@ namespace MISA.AMIS.Core.Services
         /// </summary>
         /// <param name="user">Tài khoản người dùng</param>
         /// <returns>Chuỗi token tự sinh</returns>
-        private string GenerateJSONWebToken(BaseUser user) 
+        private string GenerateJSONWebToken(User user) 
         {           
             var now = DateTime.UtcNow;            
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            var secretKey = Encoding.ASCII.GetBytes("SecretToken The MISA As Long As Thinhk Big");
+            var secretKey = Encoding.UTF8.GetBytes(_appSettings.Secret);
+
             var tokenDiscriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Role, "READ")
+                    new Claim(ClaimTypes.Role, user.RoleName)
                 }),
                 Expires = now.AddMinutes(120),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature)
