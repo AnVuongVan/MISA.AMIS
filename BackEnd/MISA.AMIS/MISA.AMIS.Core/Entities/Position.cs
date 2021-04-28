@@ -15,6 +15,11 @@ namespace MISA.AMIS.Core.Entities
         public Guid PositionId { get; set; }
 
         /// <summary>
+        /// Chức vụ cấp trên
+        /// </summary>
+        public Guid PositionParentId { get; set; }
+
+        /// <summary>
         /// Tên chức danh
         /// </summary>
         public string PositionName { get; set; }

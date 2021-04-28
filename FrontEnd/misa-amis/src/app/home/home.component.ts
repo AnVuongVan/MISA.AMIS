@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
 	rows: string[];
 	@ViewChild(TreeviewComponent, { static: false }) treeviewComponent: TreeviewComponent;
 	values: number[];
+	showDialog = false;
 
 	config = TreeviewConfig.create({		
 		decoupleChildFromParent: false,
@@ -29,24 +30,20 @@ export class HomeComponent implements OnInit {
 	constructor(private service: UserService, private router: Router) { }
   
 	ngOnInit(): void {
-	  this.items = this.service.getUsers();
+		this.items = this.service.getUsers();
 	}
 
-	onSelectedChange(downlineItems: DownlineTreeviewItem[]): void {
-		this.rows = [];
-		downlineItems.forEach(downlineItem => {
-			const item = downlineItem.item;
-			const value = item.value;
-			const texts = [item.text];
-			let parent = downlineItem.parent;
-			while (!isNil(parent)) {
-			texts.push(parent.item.text);
-			parent = parent.parent;
-			}
-			const reverseTexts = reverse(texts);
-			const row = `${reverseTexts.join(' -> ')} : ${value}`;
-			this.rows.push(row);
-		});
+	addUser() {
+		this.showDialog = !this.showDialog;
+	}
+
+	onCloseDialog(isClosed: boolean) {
+		this.showDialog = isClosed;
+	}
+
+	editUser(item: TreeviewItem): void {
+		this.showDialog = !this.showDialog;
+		console.log(item);
 	}
 	
 	removeItem(item: TreeviewItem): void {
@@ -60,6 +57,23 @@ export class HomeComponent implements OnInit {
 		    }
 		}
 		this.treeviewComponent.raiseSelectedChange();
+	}
+
+	onSelectedChange(downlineItems: DownlineTreeviewItem[]): void {
+		this.rows = [];
+		downlineItems.forEach(downlineItem => {
+			const item = downlineItem.item;
+			const value = item.value;
+			const texts = [item.text];
+			let parent = downlineItem.parent;
+			while (!isNil(parent)) {
+				texts.push(parent.item.text);
+				parent = parent.parent;
+			}
+			const reverseTexts = reverse(texts);
+			const row = `${reverseTexts.join(' -> ')} : ${value}`;
+			this.rows.push(row);
+		});
 	}
 
 	onLogout() {

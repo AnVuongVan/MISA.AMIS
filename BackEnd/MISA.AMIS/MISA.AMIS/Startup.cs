@@ -51,10 +51,7 @@ namespace MISA.AMIS
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IPositionRepository, PositionRepository>();
-            services.AddScoped<IPositionService, PositionService>();
-
-            services.AddScoped<IOfficeRepository, OfficeRepository>();
-            services.AddScoped<IOfficeService, OfficeService>();
+            services.AddScoped<IPositionService, PositionService>();           
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

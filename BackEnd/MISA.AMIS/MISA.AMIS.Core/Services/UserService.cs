@@ -27,30 +27,35 @@ namespace MISA.AMIS.Core.Services
             this._appSettings = appSettings.Value;
         }
 
+        public override ServiceResult Add(User t)
+        {
+            t.Password = BCrypt.Net.BCrypt.HashPassword(t.Password);
+            return base.Add(t);
+        }
+
+        public override ServiceResult Update(User t)
+        {
+            t.Password = BCrypt.Net.BCrypt.HashPassword(t.Password);
+            return base.Update(t);
+        }
+
         public string Authenticate(string userName, string password)
         {
             User user = _userRepository.Authenticate(userName, password);
 
-            // trả về null nếu không tìm thấy người dùng
+            // trả về string empty nếu không tìm thấy người dùng
             if (user == null)
                 return "";
 
             return GenerateJSONWebToken(user);   
         }
 
-        public IEnumerable<User> GetByPositionAndOffice(Guid positionId, Guid officeId)
+        public IEnumerable<TreeviewItem> GetByPositionAndOffice(Guid userId)
         {
-            List<List<User>> myList = new List<List<User>>();
-            var users = _userRepository.GetByPositionAndOffice(positionId, officeId);
-            myList.Add((List<User>) users);
-
-            foreach (User user in users)
-            {
-                var items = _userRepository.GetByPositionAndOffice(user.PositionId, user.OfficeId);
-                myList.Add((List<User>) items);
-            }
-            return (IEnumerable<User>) myList;
-        }
+            var treeviewItems = new List<TreeviewItem>();
+           
+            return treeviewItems;
+        }     
 
         /// <summary>
         /// Generate token khi người dùng đăng nhập thành công
@@ -66,7 +71,7 @@ namespace MISA.AMIS.Core.Services
             var tokenDiscriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.RoleName)
                 }),
                 Expires = now.AddMinutes(120),

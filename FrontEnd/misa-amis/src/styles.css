@@ -2,3 +2,16 @@
 body { 
     margin: 0;
 }
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #0073e6;
+}
+
+.btn-secondary:focus, .btn-success:focus {
+    box-shadow: none;
+}
+
+.invalid {
+    border-color: red;
+}

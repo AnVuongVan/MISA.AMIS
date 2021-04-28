@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
+using System;
+using System.Security.Claims;
 
 namespace MISA.AMIS.Controllers
 {
@@ -15,6 +18,15 @@ namespace MISA.AMIS.Controllers
         public UsersController(IUserService userService): base(userService)
         {
             this._userService = userService;
+        }
+
+        [HttpGet("{child}")]
+        [Authorize]
+        public IActionResult GetAllChildren()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = _userService.GetByPositionAndOffice(Guid.Parse(userId));
+            return Ok(result);
         }
 
         [HttpPost("{login}")]

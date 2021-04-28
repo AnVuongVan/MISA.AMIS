@@ -29,15 +29,5 @@ namespace MISA.AMIS.Infrastructure
             var user = _dbConnection.Query<User>($"Proc_Authenticate", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return user;
         }
-
-        public IEnumerable<User> GetByPositionAndOffice(Guid positionId, Guid officeId)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@PositionParentId", positionId);
-            parameters.Add("@OfficeId", officeId);
-
-            var users = _dbConnection.Query<User>($"Proc_GetUsersByPositionOffice", parameters, commandType: CommandType.StoredProcedure);
-            return users;
-        }
     }
 }

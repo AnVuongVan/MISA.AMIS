@@ -20,10 +20,9 @@ namespace MISA.AMIS.Core.Interfaces
 
         /// <summary>
         /// Lấy lên tất cả những người nằm dưới quyền của người dùng hiện tại
-        /// </summary>
-        /// <param name="positionId">Quyền của người dùng</param>
-        /// <param name="officeId">Công ty, tổ chức của người dùng</param>
-        /// <returns>Danh sách người dùng</returns>
-        IEnumerable<User> GetByPositionAndOffice(Guid positionId, Guid officeId);
+        /// </summary>       
+        /// <param name="userId">Khóa chính</param>
+        /// <returns>Danh sách theo phân cấp cây</returns>
+        IEnumerable<TreeviewItem> GetByPositionAndOffice(Guid userId);
     }
 }

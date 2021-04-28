@@ -33,17 +33,7 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Chức vụ của người dùng
         /// </summary>
-        public Guid PositionId { get; set; }
-
-        /// <summary>
-        /// Chức vụ của người quản lý người dùng
-        /// </summary>
-        public Guid PositionParentId { get; set; }
-
-        /// <summary>
-        /// Công ty, tổ chức người dùng
-        /// </summary>
-        public Guid OfficeId { get; set; }
+        public Guid PositionId { get; set; }      
 
         /// <summary>
         /// Quyền của người dùng

@@ -1,0 +1,67 @@
+<div class="modal" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm mới người dùng</h5>
+                <button type="button" class="close" aria-label="Close" (click)="closeDialog(false)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form autocomplete="off" novalidate #form="ngForm" (submit)="onSubmit(form)">
+                <div class="modal-body">      
+                    <input type="hidden" name="userId" [value]="service.formData.userId" />
+
+                    <div class="form-group">
+                        <label>Tên đăng nhập</label>
+                        <input type="text" class="form-control" placeholder="ex. anvuongvan" required
+                        name="userName" #userName="ngModel" [(ngModel)]="service.formData.userName" 
+                        [class.invalid]="userName.invalid && userName.touched" #autoFocus />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" class="form-control" placeholder="ex. 12345678@Abc" required
+                        name="password" #password="ngModel" [(ngModel)]="service.formData.password" 
+                        [class.invalid]="password.invalid && password.touched" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Công ty</label>
+                        <select class="form-control" #officeId="ngModel" 
+                            name="officeId" [(ngModel)]="service.formData.officeId">
+                            <option *ngFor="let office of service.listOffices" value="{{ office.OfficeId }}">
+                                {{ office.OfficeName }}
+                            </option>                        
+                        </select>
+                    </div> 
+
+                    <div class="form-group">
+                        <label>Chức vụ cấp trên</label>
+                        <select class="form-control" #positionParentId="ngModel" 
+                            name="positionParentId" [(ngModel)]="service.formData.positionParentId">
+                            <option *ngFor="let position of service.listPositions" value="{{ position.PositionId }}">
+                                {{ position.PositionName }}
+                            </option>                         
+                        </select>
+                    </div> 
+                    
+                    <div class="form-group">
+                        <label>Chức vụ hiện tại</label>
+                        <select class="form-control" #positionId="ngModel" 
+                            name="positionId" [(ngModel)]="service.formData.positionId">
+                            <option *ngFor="let position of service.listPositions" value="{{ position.PositionId }}">
+                                {{ position.PositionName }}
+                            </option>                         
+                        </select>
+                    </div>        
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeDialog(false)">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-success" [disabled]="form.invalid">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

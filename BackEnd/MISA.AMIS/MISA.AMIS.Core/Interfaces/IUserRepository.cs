@@ -17,13 +17,5 @@ namespace MISA.AMIS.Core.Interfaces
         /// <param name="password">Mật khẩu</param>
         /// <returns>Thông tin của người dùng</returns>
         User Authenticate(string userName, string password);
-
-        /// <summary>
-        /// Lấy lên tất cả những người nằm dưới quyền của người dùng hiện tại
-        /// </summary>
-        /// <param name="positionId">Quyền của người dùng</param>
-        /// <param name="officeId">Công ty, tổ chức của người dùng</param>
-        /// <returns>Danh sách người dùng</returns>
-        IEnumerable<User> GetByPositionAndOffice(Guid positionId, Guid officeId);
     }
 }

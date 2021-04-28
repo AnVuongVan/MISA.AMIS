@@ -20,7 +20,7 @@ namespace MISA.AMIS.Core.Services
             };
         }
 
-        public ServiceResult Add(T t)
+        public virtual ServiceResult Add(T t)
         {
             t.EntityState = EntityState.Create;
 
@@ -58,7 +58,7 @@ namespace MISA.AMIS.Core.Services
             return _baseRepository.GetById(id);
         }
 
-        public ServiceResult Update(T t)
+        public virtual ServiceResult Update(T t)
         {
             t.EntityState = EntityState.Update;
 
