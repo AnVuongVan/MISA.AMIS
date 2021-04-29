@@ -1,5 +1,7 @@
-﻿using MISA.AMIS.Core.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
+using System;
 
 namespace MISA.AMIS.Controllers
 {
@@ -14,6 +16,12 @@ namespace MISA.AMIS.Controllers
         public PositionsController(IPositionService positionService): base(positionService)
         {
             this._positionService = positionService;
+        }
+
+        public override IActionResult Get()
+        {
+            string id = base.GetPositionId();
+            return Ok(_positionService.GetPositionById(Guid.Parse(id)));
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MISA.AMIS.Core.Enums;
 using MISA.AMIS.Core.Interfaces;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace MISA.AMIS.Controllers
@@ -24,8 +25,8 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpGet]       
-        //[Authorize]
-        public IActionResult Get()
+        [Authorize]
+        public virtual IActionResult Get()
         {
             var entities = _baseService.Get();
             return Ok(entities);
@@ -86,6 +87,11 @@ namespace MISA.AMIS.Controllers
                 return NoContent();
             }
             return Ok(rowEffects);
+        }
+
+        protected string GetPositionId()
+        {
+            return this.User.Claims.First(i => i.Type == "PositionId").Value;
         }
     }
 }

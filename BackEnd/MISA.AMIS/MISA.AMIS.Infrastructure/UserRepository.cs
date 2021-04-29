@@ -20,14 +20,31 @@ namespace MISA.AMIS.Infrastructure
 
         }
 
-        public User Authenticate(string userName, string password)
+        public User Authenticate(string userName)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@UserName", userName);
-            parameters.Add("@Password", password);
-
-            var user = _dbConnection.Query<User>($"Proc_Authenticate", parameters, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            var user = _dbConnection.Query<User>($"Proc_Authenticate", new { UserName = userName }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return user;
+        }
+
+        public IEnumerable<string> GetPositionChildId(Guid positionId)
+        {
+            var childPotiontions = new List<string>();
+            var listPositionsChild = _dbConnection.Query<Guid>($"Proc_GetPositionParentId", 
+                new { PositionId = positionId }, commandType: CommandType.StoredProcedure);
+
+            foreach(Guid item in listPositionsChild)
+            {
+                string positionItem = item.ToString();
+                childPotiontions.Add(positionItem);
+            }
+            return childPotiontions;
+        }
+
+        public IEnumerable<User> GetUsersByPositionId(Guid positionId)
+        {
+            var users = _dbConnection.Query<User>($"Proc_GetUsersByPositionId", 
+                new { PositionId = positionId }, commandType: CommandType.StoredProcedure);
+            return users;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using MISA.AMIS.Core.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace MISA.AMIS.Core.Interfaces
 {
@@ -8,5 +10,11 @@ namespace MISA.AMIS.Core.Interfaces
     /// CreatedBy: VVAn(22/04/2021)
     public interface IPositionRepository: IBaseRepository<Position>
     {
+        /// <summary>
+        /// Lấy ra cây chức vụ theo người dùng
+        /// </summary>
+        /// <param name="id">Khóa chính</param>
+        /// <returns>Cây phân cấp chức vụ</returns>
+        Task<TreeviewItem> GetPositionById(Guid id);
     }
 }

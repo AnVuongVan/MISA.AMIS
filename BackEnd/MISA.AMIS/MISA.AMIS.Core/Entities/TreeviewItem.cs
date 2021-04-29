@@ -18,7 +18,7 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Giá trị
         /// </summary>
-        public string Value { get; set; }
+        public Guid Value { get; set; }
 
         /// <summary>
         /// Đóng, mở Treeview
@@ -28,6 +28,6 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Treeview con
         /// </summary>
-        public TreeviewItem[] Children { get; set; }
+        public List<TreeviewItem> Children { get; set; }
     }
 }

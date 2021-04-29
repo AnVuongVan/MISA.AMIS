@@ -41,21 +41,29 @@ namespace MISA.AMIS.Core.Services
 
         public string Authenticate(string userName, string password)
         {
-            User user = _userRepository.Authenticate(userName, password);
+            User user = _userRepository.Authenticate(userName);
 
-            // trả về string empty nếu không tìm thấy người dùng
-            if (user == null)
+            // trả về string empty nếu không tìm thấy người dùng hoặc mật khẩu sai
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
                 return "";
 
             return GenerateJSONWebToken(user);   
         }
 
-        public IEnumerable<TreeviewItem> GetByPositionAndOffice(Guid userId)
+        public IEnumerable<User> GetUsersByPositionId(Guid positionId)
         {
-            var treeviewItems = new List<TreeviewItem>();
-           
-            return treeviewItems;
-        }     
+            var usersList = new List<User>();
+            var positionChildId = _userRepository.GetPositionChildId(positionId);
+            foreach (string item in positionChildId)
+            {
+                var users = _userRepository.GetUsersByPositionId(Guid.Parse(item));
+                foreach (User user in users)
+                {
+                    usersList.Add(user);
+                }
+            }
+            return usersList;
+        }
 
         /// <summary>
         /// Generate token khi người dùng đăng nhập thành công
@@ -71,7 +79,7 @@ namespace MISA.AMIS.Core.Services
             var tokenDiscriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                    new Claim("PositionId", user.PositionId.ToString()),
                     new Claim(ClaimTypes.Role, user.RoleName)
                 }),
                 Expires = now.AddMinutes(120),
@@ -80,6 +88,6 @@ namespace MISA.AMIS.Core.Services
 
             var token = tokenHandler.CreateToken(tokenDiscriptor);
             return tokenHandler.WriteToken(token);
-        }
+        }      
     }
 }

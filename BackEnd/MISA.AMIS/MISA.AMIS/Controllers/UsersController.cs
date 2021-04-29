@@ -20,13 +20,10 @@ namespace MISA.AMIS.Controllers
             this._userService = userService;
         }
 
-        [HttpGet("{child}")]
-        [Authorize]
-        public IActionResult GetAllChildren()
+        public override IActionResult Get()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = _userService.GetByPositionAndOffice(Guid.Parse(userId));
-            return Ok(result);
+            string positionId = base.GetPositionId();
+            return Ok(_userService.GetUsersByPositionId(Guid.Parse(positionId)));
         }
 
         [HttpPost("{login}")]

@@ -1,6 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
+using System;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MISA.AMIS.Infrastructure
 {
@@ -13,6 +18,23 @@ namespace MISA.AMIS.Infrastructure
         public PositionRepository(IConfiguration configuration): base(configuration)
         {
 
+        }
+
+        public async Task<TreeviewItem> GetPositionById(Guid id)
+        {
+            var treeviewItem = new TreeviewItem();
+            var storeName = $"Proc_GetPositionById";
+
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("@PositionId", id);           
+            dynamicParameters.Add("@PositionName", dbType: DbType.String, direction: ParameterDirection.Output);
+            
+            var positions = await _dbConnection.QueryAsync<TreeviewItem>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
+            treeviewItem.Children = positions.ToList();
+            treeviewItem.Text = dynamicParameters.Get<string>("@PositionName");
+            treeviewItem.Value = id;
+
+            return treeviewItem;
         }
     }
 }

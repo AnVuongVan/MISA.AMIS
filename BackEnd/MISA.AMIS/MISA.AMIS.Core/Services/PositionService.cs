@@ -1,5 +1,7 @@
 ﻿using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace MISA.AMIS.Core.Services
 {
@@ -13,6 +15,11 @@ namespace MISA.AMIS.Core.Services
         public PositionService(IPositionRepository positionRepository): base(positionRepository)
         {
             this._positionRepository = positionRepository;
+        }
+
+        public Task<TreeviewItem> GetPositionById(Guid id)
+        {
+            return _positionRepository.GetPositionById(id);
         }
     }
 }

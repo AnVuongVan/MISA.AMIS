@@ -21,8 +21,8 @@ namespace MISA.AMIS.Core.Interfaces
         /// <summary>
         /// Lấy lên tất cả những người nằm dưới quyền của người dùng hiện tại
         /// </summary>       
-        /// <param name="userId">Khóa chính</param>
+        /// <param name="positionId">Khóa chính</param>
         /// <returns>Danh sách theo phân cấp cây</returns>
-        IEnumerable<TreeviewItem> GetByPositionAndOffice(Guid userId);
+        IEnumerable<User> GetUsersByPositionId(Guid positionId);
     }
 }
