@@ -30,9 +30,9 @@ namespace MISA.AMIS.Infrastructure
             dynamicParameters.Add("@PositionName", dbType: DbType.String, direction: ParameterDirection.Output);
             
             var positions = await _dbConnection.QueryAsync<TreeviewItem>(storeName, dynamicParameters, commandType: CommandType.StoredProcedure);
-            treeviewItem.Children = positions.ToList();
-            treeviewItem.Text = dynamicParameters.Get<string>("@PositionName");
-            treeviewItem.Value = id;
+            treeviewItem.children = positions.ToList();
+            treeviewItem.text = dynamicParameters.Get<string>("@PositionName");
+            treeviewItem.value = id;
 
             return treeviewItem;
         }

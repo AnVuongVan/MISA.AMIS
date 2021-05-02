@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { TreeviewItem } from 'ngx-treeview';
 import { User } from './user';
-import { Office } from './office';
 import { Position } from './position';
 
 @Injectable({
@@ -17,11 +16,7 @@ export class UserService {
 
 	private readonly PositionURI = 'https://localhost:44317/api/v1/positions';
 
-	private readonly OfficeURI = 'https://localhost:44317/api/v1/offices';
-
 	formData: User = new User();
-
-	listOffices: Office[];
 
 	listPositions: Position[];
 
@@ -30,66 +25,20 @@ export class UserService {
 	}
 
 	getUsers(): TreeviewItem[] {
-		/*const childrenCategory = new TreeviewItem({
-			text: 'Children', value: 1, collapsed: true, children: [
-			{ text: 'Baby 3-5', value: 11 },
-			{ text: 'Baby 6-8', value: 12 },
-			{ text: 'Baby 9-12', value: 13 }
-			]
-		});
-
-		const itCategory = new TreeviewItem({
-			text: 'IT', value: 9, collapsed: true, children: [
-			{
-				text: 'Programming', value: 91, collapsed: true, children: [
-					{
-					text: 'Frontend', value: 911, collapsed: true, children: [
-						{ text: 'Angular 1', value: 9111 },
-						{ text: 'Angular 2', value: 9112 },
-						{ text: 'ReactJS', value: 9113 }
-				    ]}, 
-					{
-					text: 'Backend', value: 912, collapsed: true, children: [
-						{ text: 'C#', value: 9121 },
-						{ text: 'Java', value: 9122 },
-						{ text: 'Python', value: 9123 }
-					]}
-				]
-			},
-			{
-				text: 'Networking', value: 92, collapsed: true, children: [
-					{ text: 'Internet', value: 921 },
-					{ text: 'Security', value: 922 }
-				]
-			}
-			]
-		});
-
-		const teenCategory = new TreeviewItem({
-			text: 'Teen', value: 2, collapsed: true, children: [
-				{ text: 'Adventure', value: 21 },
-				{ text: 'Science', value: 22 }
-			]
-		});
-
-		return [childrenCategory, itCategory, teenCategory];*/
+		var childrenCategory = new TreeviewItem({text: '', value: 0,  
+		collapsed: true, children: [{ text: '', value: 0 }] });
 		
-		const childrenCategory = new TreeviewItem({text: 'Children', value: 3,  collapsed: true, children: [{ text: "Salad", value: 21 }] });
-		
-		this.http.get(this.UserURI)
+		this.http.get(this.PositionURI) 
 		    .toPromise()
 			.then(response => {
-				for (let i = 0; i < 2; i++) {
-					let userName = response[i].UserName;
-					let userId = response[i].UserId;
-					childrenCategory.children.push(
-						new TreeviewItem({ text: userName, value: userId })
-					);
-				}
+				childrenCategory.text = response['Result'].text;
+				childrenCategory.value = response['Result'].value;
+				childrenCategory.children = response['Result'].children;
 			})
 			.catch(err => {
-				console.error(err)
-			});		
+				console.log(err);
+			});	
+		
 		return [childrenCategory];
 	}
 
@@ -107,12 +56,6 @@ export class UserService {
 
 	deleteUser(id: number) {
 		return this.http.delete(`${this.UserURI}/${id}`);
-	}
-
-	getOffices() {
-		this.http.get(this.OfficeURI)
-			.toPromise()
-			.then(res => this.listOffices = res as Office[]);
 	}
 
 	getPositions() {

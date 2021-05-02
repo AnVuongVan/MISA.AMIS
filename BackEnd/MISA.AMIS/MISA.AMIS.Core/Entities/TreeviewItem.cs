@@ -13,21 +13,21 @@ namespace MISA.AMIS.Core.Entities
         /// <summary>
         /// Nội dung
         /// </summary>
-        public string Text { get; set; }
+        public string text { get; set; }
 
         /// <summary>
         /// Giá trị
         /// </summary>
-        public Guid Value { get; set; }
+        public Guid value { get; set; }
 
         /// <summary>
         /// Đóng, mở Treeview
         /// </summary>
-        public bool Collapsed { get; set; } = true;
+        public bool collapsed { get; set; } = true;
 
         /// <summary>
         /// Treeview con
         /// </summary>
-        public List<TreeviewItem> Children { get; set; }
+        public List<TreeviewItem> children { get; set; } = new List<TreeviewItem>();
     }
 }

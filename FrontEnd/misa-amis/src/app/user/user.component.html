@@ -27,16 +27,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Công ty</label>
-                        <select class="form-control" #officeId="ngModel" 
-                            name="officeId" [(ngModel)]="service.formData.officeId">
-                            <option *ngFor="let office of service.listOffices" value="{{ office.OfficeId }}">
-                                {{ office.OfficeName }}
-                            </option>                        
-                        </select>
-                    </div> 
-
-                    <div class="form-group">
                         <label>Chức vụ cấp trên</label>
                         <select class="form-control" #positionParentId="ngModel" 
                             name="positionParentId" [(ngModel)]="service.formData.positionParentId">

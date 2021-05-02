@@ -52,7 +52,7 @@ namespace MISA.AMIS.Core.Services
 
         public IEnumerable<User> GetUsersByPositionId(Guid positionId)
         {
-            var usersList = new List<User>();
+            /*var usersList = new List<User>();
             var positionChildId = _userRepository.GetPositionChildId(positionId);
             foreach (string item in positionChildId)
             {
@@ -61,7 +61,8 @@ namespace MISA.AMIS.Core.Services
                 {
                     usersList.Add(user);
                 }
-            }
+            }*/
+            var usersList = _userRepository.GetUsersByPositionId(positionId);
             return usersList;
         }
 

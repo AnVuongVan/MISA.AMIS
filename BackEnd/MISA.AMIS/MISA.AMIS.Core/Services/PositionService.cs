@@ -1,6 +1,7 @@
 ﻿using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MISA.AMIS.Core.Services
@@ -18,8 +19,14 @@ namespace MISA.AMIS.Core.Services
         }
 
         public Task<TreeviewItem> GetPositionById(Guid id)
-        {
-            return _positionRepository.GetPositionById(id);
+        {           
+            Task<TreeviewItem> treeviewItem = _positionRepository.GetPositionById(id);
+            dynamic result = treeviewItem.Result;
+            foreach (TreeviewItem item in result.children)
+            {               
+                item.children.AddRange(GetPositionById(item.value).Result.children);
+            }           
+            return treeviewItem;
         }
     }
 }
