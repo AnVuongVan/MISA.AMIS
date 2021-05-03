@@ -58,7 +58,7 @@ namespace MISA.AMIS.Core.Services
             return _baseRepository.GetById(id);
         }
 
-        public virtual ServiceResult Update(T t)
+        public ServiceResult Update(T t)
         {
             t.EntityState = EntityState.Update;
 

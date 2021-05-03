@@ -25,9 +25,9 @@ namespace MISA.AMIS.Core.Entities
         /// Mật khẩu
         /// </summary>
         /// [Required]
-        [CheckDuplicate]
-        [MinLength(6, "Mật khẩu phải tối thiểu 6 kí tự")]
-        [DisplayName("Mật khẩu")]
+        ///[CheckDuplicate]
+        ///[MinLength(6, "Mật khẩu phải tối thiểu 6 kí tự")]
+        ///[DisplayName("Mật khẩu")]
         public string Password { get; set; }
 
         /// <summary>

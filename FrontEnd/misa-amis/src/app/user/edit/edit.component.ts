@@ -1,16 +1,14 @@
 import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { User } from '../shared/user';
-import { UserService } from '../shared/user.service';
+import { User } from '../../shared/user';
+import { UserService } from '../../shared/user.service';
 
 @Component({
-	selector: 'app-user',
-	templateUrl: './user.component.html',
-	styleUrls: ['./user.component.css']
+	selector: 'app-edit',
+	templateUrl: './edit.component.html',
+	styleUrls: ['./edit.component.css']
 })
-
-export class UserComponent implements OnInit {
-
+export class EditComponent implements OnInit {
 	@Output() closedDialog = new EventEmitter<boolean>();
 
 	@ViewChild('autoFocus', {static: false}) inputEl: ElementRef;
@@ -18,7 +16,7 @@ export class UserComponent implements OnInit {
 	constructor(public service: UserService) { }
 
 	ngOnInit(): void { 
-		this.service.getPositions();
+		this.service.fetchPositions();
 	}
 
 	onSubmit(form: NgForm): void {

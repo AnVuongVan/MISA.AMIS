@@ -11,7 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { UserService } from './shared/user.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
-import { UserComponent } from './user/user.component';
+import { ViewComponent } from './user/view/view.component';
+import { RemoveComponent } from './user/remove/remove.component';
+import { EditComponent } from './user/edit/edit.component';
 
 @NgModule({
 	declarations: [
@@ -19,7 +21,9 @@ import { UserComponent } from './user/user.component';
 		LoginComponent,
 		HomeComponent,
         ForbiddenComponent,
-        UserComponent
+        ViewComponent,
+        RemoveComponent,
+        EditComponent
 	],
 	imports: [
 		BrowserModule,

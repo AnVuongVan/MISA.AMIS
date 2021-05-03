@@ -1,0 +1,34 @@
+<div class="modal" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Danh sách người dùng</h5>
+                <button type="button" class="close" aria-label="Close" (click)="closeView(false)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">      
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Tên đăng nhập</th>
+                            <th class="text-center">Thao tác</th>                         
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of listUsers; let i = index">
+                            <th class="text-center">{{ i + 1 }}</th>
+                            <td class="text-center">{{ user.userName }}</td>
+                            <td class="text-center">
+                                <i class="fas fa-edit" (click)="editUser(user)" title="Chỉnh sửa"></i>
+                                <i class="fas fa-trash-alt" (click)="removeUser(user.userId)" title="Xóa"></i>
+                            </td>                          
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+.modal {
+    display: block;
+}
+td>i:first-child {
+    margin-right: 5px;
+}
+
+td>i:hover {
+    cursor: pointer;
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MISA.AMIS.Core.Entities;
 using MISA.AMIS.Core.Interfaces;
 using System;
@@ -18,7 +19,9 @@ namespace MISA.AMIS.Controllers
             this._positionService = positionService;
         }
 
-        public override IActionResult Get()
+        [HttpGet("child")]
+        [Authorize]
+        public IActionResult GetListCurrentPositions()
         {
             string id = base.GetPositionId();
             return Ok(_positionService.GetPositionById(Guid.Parse(id)));

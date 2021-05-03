@@ -33,12 +33,13 @@ namespace MISA.AMIS
         {
             services.AddCors();
 
-            services.AddControllers()
+            /*services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                });         
+                });*/
+            services.AddControllers();
 
             SqlMapper.AddTypeHandler(new MySqlGuidTypeHandler());
             SqlMapper.RemoveTypeMap(typeof(Guid));

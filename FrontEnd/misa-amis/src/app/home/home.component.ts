@@ -5,6 +5,7 @@ import { isNil, remove, reverse } from 'lodash';
 import { TreeviewItem, TreeviewComponent, 
 	TreeviewConfig, TreeviewHelper, DownlineTreeviewItem 
 } from 'ngx-treeview';
+import { User } from '../shared/user';
 
 @Component({
 	selector: 'app-home',
@@ -20,20 +21,27 @@ export class HomeComponent implements OnInit {
 	rows: string[];
 	@ViewChild(TreeviewComponent, { static: false }) treeviewComponent: TreeviewComponent;
 	values: number[];
+	users: User[];
 	showDialog = false;
+	viewDialog = false;
 
 	config = TreeviewConfig.create({		
 		decoupleChildFromParent: false,
 		maxHeight: 400
 	});
   
-	constructor(private service: UserService, private router: Router) { }
+	constructor(private service: UserService, private router: Router) {
+		let payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
+		let userRole = payLoad.role;
+		console.log(userRole);
+	}
   
 	ngOnInit(): void {
-		this.items = this.service.getUsers();
+		this.items = this.service.getTreePositions();
 	}
 
 	addUser() {
+		this.service.formData = new User();
 		this.showDialog = !this.showDialog;
 	}
 
@@ -41,9 +49,18 @@ export class HomeComponent implements OnInit {
 		this.showDialog = isClosed;
 	}
 
-	editUser(item: TreeviewItem): void {
-		this.showDialog = !this.showDialog;
-		console.log(item);
+	viewUser(id: string): void {
+		this.service.fetchUsers(id).subscribe(
+			res => this.users = res,
+			err => console.log(err)
+		);
+		setTimeout(() => {
+			this.viewDialog = !this.viewDialog;
+		}, 400);
+	}
+
+	onCloseView(isClosed: boolean) {
+		this.viewDialog = isClosed;
 	}
 	
 	removeItem(item: TreeviewItem): void {

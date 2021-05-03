@@ -26,7 +26,7 @@ namespace MISA.AMIS.Controllers
 
         [HttpGet]       
         [Authorize]
-        public virtual IActionResult Get()
+        public IActionResult Get()
         {
             var entities = _baseService.Get();
             return Ok(entities);
@@ -41,7 +41,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Post(T t)
         {
             var serviceResult = _baseService.Add(t);
@@ -51,7 +51,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Put([FromRoute] string id, T t)
         {
             var keyProperty = t.GetType().GetProperty($"{typeof(T).Name}Id");
@@ -75,7 +75,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Delete(string id)
         {
             var rowEffects = _baseService.Delete(Guid.Parse(id));

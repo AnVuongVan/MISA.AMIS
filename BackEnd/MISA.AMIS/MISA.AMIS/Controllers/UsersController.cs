@@ -20,9 +20,10 @@ namespace MISA.AMIS.Controllers
             this._userService = userService;
         }
 
-        public override IActionResult Get()
+        [HttpGet("position")]
+        [Authorize]
+        public IActionResult GetUsersByPositionId(string positionId)
         {
-            string positionId = base.GetPositionId();
             return Ok(_userService.GetUsersByPositionId(Guid.Parse(positionId)));
         }
 

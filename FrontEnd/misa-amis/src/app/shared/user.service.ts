@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { TreeviewItem } from 'ngx-treeview';
 import { User } from './user';
 import { Position } from './position';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
 	providedIn: 'root'
@@ -24,16 +25,16 @@ export class UserService {
 		return this.http.post(this.UserURI + '/login', formData);
 	}
 
-	getUsers(): TreeviewItem[] {
+	getTreePositions(): TreeviewItem[] {
 		var childrenCategory = new TreeviewItem({text: '', value: 0,  
 		collapsed: true, children: [{ text: '', value: 0 }] });
 		
-		this.http.get(this.PositionURI) 
+		this.http.get(this.PositionURI + '/child') 
 		    .toPromise()
 			.then(response => {
-				childrenCategory.text = response['Result'].text;
-				childrenCategory.value = response['Result'].value;
-				childrenCategory.children = response['Result'].children;
+				childrenCategory.text = response['result'].text;
+				childrenCategory.value = response['result'].value;
+				childrenCategory.children = response['result'].children;
 			})
 			.catch(err => {
 				console.log(err);
@@ -42,8 +43,9 @@ export class UserService {
 		return [childrenCategory];
 	}
 
-	fetchUsers() {
-		return this.http.get(this.UserURI);
+	fetchUsers(id: string): Observable<any> {
+		let params = new HttpParams().set('positionId', id);
+		return this.http.get(`${this.UserURI}/position`, { params: params });
 	}
 
 	postUser() {
@@ -58,7 +60,7 @@ export class UserService {
 		return this.http.delete(`${this.UserURI}/${id}`);
 	}
 
-	getPositions() {
+	fetchPositions() {
 		this.http.get(this.PositionURI)
 			.toPromise()
 			.then(res => this.listPositions = res as Position[]);

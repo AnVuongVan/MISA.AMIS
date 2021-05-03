@@ -29,14 +29,8 @@ namespace MISA.AMIS.Core.Services
 
         public override ServiceResult Add(User t)
         {
-            t.Password = BCrypt.Net.BCrypt.HashPassword(t.Password);
+            t.Password = BCrypt.Net.BCrypt.HashPassword("123123");
             return base.Add(t);
-        }
-
-        public override ServiceResult Update(User t)
-        {
-            t.Password = BCrypt.Net.BCrypt.HashPassword(t.Password);
-            return base.Update(t);
         }
 
         public string Authenticate(string userName, string password)
