@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" *ngIf="service.formData.positionId">Cập nhật chức vụ</h5>
                 <h5 class="modal-title" *ngIf="!service.formData.positionId">Thêm mới chức vụ</h5>
-                <button type="button" class="close" aria-label="Close" (click)="closeDialog(false)">
+                <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -24,7 +24,7 @@
                         <label>Chức vụ cấp trên</label>
                         <select class="form-control" #positionParentId="ngModel" 
                             name="positionParentId" [(ngModel)]="service.formData.positionParentId">
-                            <option *ngFor="let position of service.fetchPositions()" 
+                            <option *ngFor="let position of positions" 
                             value="{{ position.positionId }}">
                                 {{ position.positionName }}
                             </option>                         
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="closeDialog(false)">Hủy bỏ</button>
+                    <button type="button" class="btn btn-secondary" (click)="closeDialog()">Hủy bỏ</button>
                     <button type="submit" class="btn btn-success" [disabled]="form.invalid">Lưu</button>
                 </div>
             </form>

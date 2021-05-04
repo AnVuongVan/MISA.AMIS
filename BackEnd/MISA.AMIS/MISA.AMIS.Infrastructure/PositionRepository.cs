@@ -23,7 +23,7 @@ namespace MISA.AMIS.Infrastructure
         public async Task<TreeviewItem> GetPositionById(Guid id)
         {
             var treeviewItem = new TreeviewItem();
-            var storeName = $"Proc_GetPositionById";
+            var storeName = $"Proc_GetListPositionById";
 
             DynamicParameters dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("@PositionId", id);           

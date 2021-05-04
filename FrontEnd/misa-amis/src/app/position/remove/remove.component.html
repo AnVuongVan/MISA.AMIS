@@ -1,21 +1,20 @@
 <div class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-        
+        <div class="modal-content">   
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Xóa dữ liệu</h5>
-                <button type="button" class="close" aria-label="Close" (click)="closeRemoveDialog(false)">
+                <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
         
             <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa vị trí <b></b> khỏi danh sách cây phân cấp này không?</p>                
+                <p>Bạn có chắc chắn muốn xóa cây vị trí khỏi danh sách cây phân cấp này không?</p>                
                 <p class="debug-url"></p>
             </div>
             
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="closeRemoveDialog(false)">Hủy bỏ</button>
+                <button type="button" class="btn btn-default" (click)="closeDialog()">Hủy bỏ</button>
                 <a class="btn btn-danger btn-ok" (click)="removePosition()">Xóa</a>
             </div>
         </div>

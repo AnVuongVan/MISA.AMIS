@@ -4,7 +4,7 @@
         
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Xóa dữ liệu</h5>
-                <button type="button" class="close" aria-label="Close" (click)="closeRemoveDialog(false)">
+                <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -15,7 +15,7 @@
             </div>
             
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="closeRemoveDialog(false)">Hủy bỏ</button>
+                <button type="button" class="btn btn-default" (click)="closeDialog()">Hủy bỏ</button>
                 <a class="btn btn-danger btn-ok" (click)="removeUser()">Xóa</a>
             </div>
         </div>

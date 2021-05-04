@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../../shared/user.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -14,8 +14,6 @@ export class RemoveUserComponent implements OnInit {
 
 	userName: string;
 
-	@Output() closedRemoveDialog = new EventEmitter<boolean>();
-
 	constructor(private service: UserService, private toastr: ToastrService) { }
 
 	ngOnInit(): void {
@@ -29,11 +27,12 @@ export class RemoveUserComponent implements OnInit {
 			res => console.log(res),
 			err => console.log(err)
 		)
-		this.closeRemoveDialog(false);
+		this.closeDialog();
+		this.service.viewDialog = !this.service.viewDialog;
 		this.toastr.success('Xóa người dùng thành công', 'Thông báo');
 	}
 
-	closeRemoveDialog(isClosed: boolean): void {
-		this.closedRemoveDialog.emit(isClosed);
+	closeDialog(): void {
+		this.service.removeDialog = !this.service.removeDialog;
 	}
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { User } from '../../shared/user';
 import { UserService } from '../../shared/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { Position } from '../../shared/position';
 
 @Component({
 	selector: 'app-edit-user',
@@ -11,15 +12,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class EditUserComponent implements OnInit {
-	
-	@Output() closedDialog = new EventEmitter<boolean>();
 
 	@ViewChild('autoFocus', {static: false}) inputEl: ElementRef;
+
+	positions: Position[];
 
 	constructor(public service: UserService, private toastr: ToastrService) { }
 
 	ngOnInit(): void { 
-		this.service.fetchPositions();
+		this.positions = this.service.fetchPositions();
 	}
 
 	onSubmit(form: NgForm): void {
@@ -30,7 +31,8 @@ export class EditUserComponent implements OnInit {
 			this.insertUser(form);
 			this.toastr.success('Thêm người dùng thành công', 'Thông báo');
 		}
-		this.closeDialog(false);
+		this.closeDialog();
+		this.service.viewDialog = !this.service.viewDialog;
 	}
 
 	insertUser(form: NgForm) {
@@ -62,8 +64,8 @@ export class EditUserComponent implements OnInit {
 		this.service.formData = new User();
 	}
 
-	closeDialog(isClosed: boolean): void {
-		this.closedDialog.emit(isClosed);		
+	closeDialog(): void {
+		this.service.editDialog = !this.service.editDialog;		
 	}
 
 	ngAfterViewInit() {

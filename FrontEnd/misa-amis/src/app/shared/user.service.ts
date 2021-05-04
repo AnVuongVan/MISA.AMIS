@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { TreeviewItem } from 'ngx-treeview';
 import { User } from './user';
 import { Position } from './position';
 
@@ -16,30 +15,16 @@ export class UserService {
 
 	private readonly PositionURI = 'https://localhost:44317/api/v1/positions';
 
-	formData: User = new User();
+	viewDialog: boolean = false;
 
-	listPositions: Position[];
+	editDialog: boolean = false;
+
+	removeDialog: boolean = false;
+
+	formData: User = new User();
 
 	login(formData) {
 		return this.http.post(this.UserURI + '/login', formData);
-	}
-
-	getTreePositions(): TreeviewItem[] {
-		var childrenCategory = new TreeviewItem({text: '', value: 0,  
-		collapsed: true, children: [{ text: '', value: 0 }] });
-		
-		this.http.get(this.PositionURI + '/child') 
-		    .toPromise()
-			.then(response => {
-				childrenCategory.text = response['result'].text;
-				childrenCategory.value = response['result'].value;
-				childrenCategory.children = response['result'].children;
-			})
-			.catch(err => {
-				console.log(err);
-			});	
-		
-		return [childrenCategory];
 	}
 
 	getUsersByPositionId(id: string): User[] {
@@ -69,10 +54,14 @@ export class UserService {
 		return this.http.delete(`${this.UserURI}/${id}`);
 	}
 
-	fetchPositions() {
-		this.http.get(this.PositionURI)
+	fetchPositions(): Position[] {
+		var positions: Position[] = []; 
+		this.http.get<any[]>(this.PositionURI)
 			.toPromise()
-			.then(res => this.listPositions = res as Position[]);
+			.then(res => {
+				res.forEach(position => positions.push(position));
+			});
+		return positions;
 	}
 
 	getRoleName(): string {

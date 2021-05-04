@@ -28,5 +28,15 @@ namespace MISA.AMIS.Core.Services
             }           
             return treeviewItem;
         }
+
+        public override ServiceResult Delete(Guid id)
+        {
+            Task<TreeviewItem> treeviewItem = this.GetPositionById(id);          
+            foreach (TreeviewItem item in treeviewItem.Result.children)
+            {
+                return this.Delete(item.value);               
+            }
+            return base.Delete(id);
+        }
     }
 }

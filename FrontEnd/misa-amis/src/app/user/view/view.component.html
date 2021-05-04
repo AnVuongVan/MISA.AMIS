@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Danh sách người dùng</h5>
-                <button type="button" class="close" aria-label="Close" (click)="closeView(false)">
+                <button type="button" class="close" aria-label="Close" (click)="closeView()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -29,10 +29,15 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="modal-footer">
+				<button type="button" class="btn btn-outline-success btn-sm" (click)="addUser(positionId)"
+				*ngIf="service.getRoleName() === 'ADMIN'">Thêm mới</button>
+			</div>
         </div>
     </div>
 </div>
 
-<app-remove-user *ngIf="removeDialog" [userId]="userId"
-    (closedRemoveDialog)="onCloseRemoveDialog($event)">
-</app-remove-user>
+<app-edit-user *ngIf="service.editDialog"></app-edit-user>
+
+<app-remove-user *ngIf="service.removeDialog" [userId]="userId"></app-remove-user>

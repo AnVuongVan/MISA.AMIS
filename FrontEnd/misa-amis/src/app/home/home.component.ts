@@ -1,87 +1,68 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
-import { isNil, remove, reverse } from 'lodash';
-import { TreeviewItem, TreeviewComponent, 
-	TreeviewConfig, TreeviewHelper, DownlineTreeviewItem 
-} from 'ngx-treeview';
-import { User } from '../shared/user';
+import { TreeviewItem, TreeviewComponent, TreeviewConfig } from 'ngx-treeview';
+import { PositionService } from '../shared/position.service';
+import { Position } from '../shared/position';
 
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.css'],
-	providers: [
-		UserService
-	]
+	styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
-	//dropdownEnabled = true;
-	items: TreeviewItem[];
-	rows: string[];
-	@ViewChild(TreeviewComponent, { static: false }) treeviewComponent: TreeviewComponent;
-	//values: number[];
+	/*items: TreeviewItem[];
+	@ViewChild(TreeviewComponent, { static: false }) treeviewComponent: TreeviewComponent;*/
 	positionId: string;
-	showDialog: boolean = false;
-	viewDialog: boolean = false;
+	item: TreeviewItem;
 
 	config = TreeviewConfig.create({		
 		decoupleChildFromParent: false,
 		maxHeight: 400
 	});
   
-	constructor(public service: UserService, private router: Router) { }
-  
+	constructor(public userService: UserService, public positionService: PositionService, 
+		private router: Router) { }
+		
 	ngOnInit(): void {
-		this.items = this.service.getTreePositions();
+		this.positionService.items = this.positionService.getTreePositions();
 	}
 
-	addUser() {
-		this.service.formData = new User();
-		this.showDialog = !this.showDialog;
-	}
-
-	onCloseDialog(isClosed: boolean) {
-		this.showDialog = isClosed;
+	addItem() {
+		this.positionService.formData = new Position();
+		this.positionService.editDialog = !this.positionService.editDialog;
 	}
 
 	viewUser(id: string): void {
-		this.positionId = id;
-		this.viewDialog = !this.viewDialog;
+		this.positionId = id;	
+		this.userService.viewDialog = !this.userService.viewDialog;
 	}
 
-	onCloseView(isClosed: boolean) {
-		this.viewDialog = isClosed;
+	editItem(item: TreeviewItem): void {
+		this.positionService.editDialog = !this.positionService.editDialog;
+		this.positionService.getPositionById(item.value).subscribe(
+			res => this.positionService.formData = Object.assign({}, res)
+		)
 	}
 	
 	removeItem(item: TreeviewItem): void {
-		for (const tmpItem of this.items) {
-			if (tmpItem === item) {
-				remove(this.items, item);
-			} else {
-				if (TreeviewHelper.removeItem(tmpItem, item)) {
-					break;
+		this.positionService.removeDialog = !this.positionService.removeDialog;
+		//this.positionService.formData.positionId = item.value;
+		this.item = item;
+		
+		/*if (this.positionService.isRemoved) {
+			for (const tmpItem of this.items) {
+				if (tmpItem === item) {
+					remove(this.items, item);
+				} else {
+					if (TreeviewHelper.removeItem(tmpItem, item)) {
+						break;
+					}
 				}
-		    }
-		}
-		this.treeviewComponent.raiseSelectedChange();
-	}
-
-	onSelectedChange(downlineItems: DownlineTreeviewItem[]): void {
-		this.rows = [];
-		downlineItems.forEach(downlineItem => {
-			const item = downlineItem.item;
-			const value = item.value;
-			const texts = [item.text];
-			let parent = downlineItem.parent;
-			while (!isNil(parent)) {
-				texts.push(parent.item.text);
-				parent = parent.parent;
 			}
-			const reverseTexts = reverse(texts);
-			const row = `${reverseTexts.join(' -> ')} : ${value}`;
-			this.rows.push(row);
-		});
+			this.treeviewComponent.raiseSelectedChange();
+		}*/
 	}
 
 	onLogout() {

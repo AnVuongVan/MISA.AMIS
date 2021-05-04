@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" *ngIf="service.formData.userId">Cập nhật người dùng</h5>
                 <h5 class="modal-title" *ngIf="!service.formData.userId">Thêm mới người dùng</h5>
-                <button type="button" class="close" aria-label="Close" (click)="closeDialog(false)">
+                <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -20,11 +20,11 @@
                         [class.invalid]="userName.invalid && userName.touched" #autoFocus />
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="service.formData.userId">
                         <label>Chức vụ</label>
                         <select class="form-control" #positionId="ngModel" 
                             name="positionId" [(ngModel)]="service.formData.positionId">
-                            <option *ngFor="let position of service.listPositions" value="{{ position.positionId }}">
+                            <option *ngFor="let position of positions" value="{{ position.positionId }}">
                                 {{ position.positionName }}
                             </option>                         
                         </select>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="closeDialog(false)">Hủy bỏ</button>
+                    <button type="button" class="btn btn-secondary" (click)="closeDialog()">Hủy bỏ</button>
                     <button type="submit" class="btn btn-success" [disabled]="form.invalid">Lưu</button>
                 </div>
             </form>

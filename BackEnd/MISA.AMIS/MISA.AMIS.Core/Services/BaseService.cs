@@ -42,7 +42,7 @@ namespace MISA.AMIS.Core.Services
             return _serviceResult;
         }
 
-        public ServiceResult Delete(Guid id)
+        public virtual ServiceResult Delete(Guid id)
         {
             _serviceResult.Data = _baseRepository.Delete(id);
             return _serviceResult;

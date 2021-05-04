@@ -16,9 +16,12 @@ export class EditPositionComponent implements OnInit {
 
 	@ViewChild('autoFocus', {static: false}) inputEl: ElementRef;
 
+	positions: Position[];
+
 	constructor(public service: PositionService, private toastr: ToastrService) { }
 
 	ngOnInit(): void {
+		this.positions = this.service.fetchPositions();
 	}
 
 	onSubmit(form: NgForm): void {
@@ -29,7 +32,7 @@ export class EditPositionComponent implements OnInit {
 			this.insertPosition(form);
 			this.toastr.success('Thêm chức vụ thành công', 'Thông báo');
 		}
-		this.closeDialog(false);
+		this.closeDialog();
 	}
 
 	insertPosition(form: NgForm) {
@@ -56,8 +59,8 @@ export class EditPositionComponent implements OnInit {
 		);
 	}
 
-	closeDialog(isClosed: boolean): void {
-		this.closedDialog.emit(isClosed);
+	closeDialog(): void {
+		this.service.editDialog = !this.service.editDialog;
 	}
 
 	resetForm(form: NgForm) {
