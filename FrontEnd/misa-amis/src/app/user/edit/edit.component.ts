@@ -2,18 +2,21 @@ import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild } from '
 import { NgForm } from '@angular/forms';
 import { User } from '../../shared/user';
 import { UserService } from '../../shared/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-	selector: 'app-edit',
+	selector: 'app-edit-user',
 	templateUrl: './edit.component.html',
 	styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+
+export class EditUserComponent implements OnInit {
+	
 	@Output() closedDialog = new EventEmitter<boolean>();
 
 	@ViewChild('autoFocus', {static: false}) inputEl: ElementRef;
 
-	constructor(public service: UserService) { }
+	constructor(public service: UserService, private toastr: ToastrService) { }
 
 	ngOnInit(): void { 
 		this.service.fetchPositions();
@@ -22,8 +25,10 @@ export class EditComponent implements OnInit {
 	onSubmit(form: NgForm): void {
 		if (this.service.formData.userId) {
 			this.updateUser(form);
+			this.toastr.success('Cập nhật thông tin thành công', 'Thông báo');
 		} else {
 			this.insertUser(form);
+			this.toastr.success('Thêm người dùng thành công', 'Thông báo');
 		}
 		this.closeDialog(false);
 	}

@@ -14,16 +14,16 @@
                         <tr>
                             <th class="text-center">#</th>
                             <th class="text-center">Tên đăng nhập</th>
-                            <th class="text-center">Thao tác</th>                         
+                            <th class="text-center" *ngIf="service.getRoleName() === 'ADMIN'">Thao tác</th>                         
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of listUsers; let i = index">
-                            <th class="text-center">{{ i + 1 }}</th>
+                            <td class="text-center">{{ i + 1 }}</td>
                             <td class="text-center">{{ user.userName }}</td>
-                            <td class="text-center">
-                                <i class="fas fa-edit" (click)="editUser(user)" title="Chỉnh sửa"></i>
-                                <i class="fas fa-trash-alt" (click)="removeUser(user.userId)" title="Xóa"></i>
+                            <td class="text-center" *ngIf="service.getRoleName() === 'ADMIN'">
+                                <i class="far fa-edit" (click)="editUser(user)" title="Chỉnh sửa"></i>
+                                <i class="far fa-trash-alt" (click)="removeUser(user.userId)" title="Xóa"></i>
                             </td>                          
                         </tr>
                     </tbody>
@@ -32,3 +32,7 @@
         </div>
     </div>
 </div>
+
+<app-remove-user *ngIf="removeDialog" [userId]="userId"
+    (closedRemoveDialog)="onCloseRemoveDialog($event)">
+</app-remove-user>

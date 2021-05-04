@@ -1,0 +1,42 @@
+<div class="modal" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" *ngIf="service.formData.positionId">Cập nhật chức vụ</h5>
+                <h5 class="modal-title" *ngIf="!service.formData.positionId">Thêm mới chức vụ</h5>
+                <button type="button" class="close" aria-label="Close" (click)="closeDialog(false)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form autocomplete="off" novalidate #form="ngForm" (submit)="onSubmit(form)">
+                <div class="modal-body">      
+                    <input type="hidden" name="positionId" [value]="service.formData.positionId" />
+
+                    <div class="form-group">
+                        <label>Tên chức vụ</label>
+                        <input type="text" class="form-control" placeholder="ex. anvuongvan" required
+                        name="positionName" #positionName="ngModel" [(ngModel)]="service.formData.positionName" 
+                        [class.invalid]="positionName.invalid && positionName.touched" #autoFocus />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Chức vụ cấp trên</label>
+                        <select class="form-control" #positionParentId="ngModel" 
+                            name="positionParentId" [(ngModel)]="service.formData.positionParentId">
+                            <option *ngFor="let position of service.fetchPositions()" 
+                            value="{{ position.positionId }}">
+                                {{ position.positionName }}
+                            </option>                         
+                        </select>
+                    </div>        
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closeDialog(false)">Hủy bỏ</button>
+                    <button type="submit" class="btn btn-success" [disabled]="form.invalid">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

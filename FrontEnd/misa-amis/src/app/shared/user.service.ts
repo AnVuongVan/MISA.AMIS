@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { TreeviewItem } from 'ngx-treeview';
 import { User } from './user';
 import { Position } from './position';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
 	providedIn: 'root'
@@ -43,9 +42,19 @@ export class UserService {
 		return [childrenCategory];
 	}
 
-	fetchUsers(id: string): Observable<any> {
+	getUsersByPositionId(id: string): User[] {
+		var users: User[] = [];  
 		let params = new HttpParams().set('positionId', id);
-		return this.http.get(`${this.UserURI}/position`, { params: params });
+		this.http.get<any[]>(`${this.UserURI}/position`, { params: params })
+			.toPromise()
+			.then(res => {
+				res.forEach(user => users.push(user));
+			})
+		return users;
+	}
+
+	getUserById(id: string) {
+		return this.http.get(`${this.UserURI}/${id}`);
 	}
 
 	postUser() {
@@ -56,7 +65,7 @@ export class UserService {
 		return this.http.put(`${this.UserURI}/${this.formData.userId}`, this.formData);
 	}
 
-	deleteUser(id: number) {
+	deleteUser(id: string) {
 		return this.http.delete(`${this.UserURI}/${id}`);
 	}
 
@@ -64,6 +73,11 @@ export class UserService {
 		this.http.get(this.PositionURI)
 			.toPromise()
 			.then(res => this.listPositions = res as Position[]);
+	}
+
+	getRoleName(): string {
+		let payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
+		return payLoad.role;
 	}
 
 	roleMatch(allowedRoles): boolean {

@@ -3,16 +3,20 @@ import { User } from 'src/app/shared/user';
 import { UserService } from '../../shared/user.service';
 
 @Component({
-	selector: 'app-view',
+	selector: 'app-view-user',
 	templateUrl: './view.component.html',
 	styleUrls: ['./view.component.css']
 })
 
-export class ViewComponent implements OnInit {
+export class ViewUserComponent implements OnInit {
 
-	@Input() users;
+	@Input() positionId;
 
 	listUsers: User [];
+
+	userId: string;
+
+	removeDialog: boolean = false;
 
 	@Output() closedView = new EventEmitter<boolean>();
 
@@ -21,7 +25,7 @@ export class ViewComponent implements OnInit {
 	constructor(public service: UserService) { }
 
 	ngOnInit(): void {
-		this.listUsers = this.users;
+		this.listUsers = this.service.getUsersByPositionId(this.positionId);
 	}
 
 	editUser(user: User): void {
@@ -30,8 +34,10 @@ export class ViewComponent implements OnInit {
 		this.closeDialog(true);
 	}
 
-	removeUser(id: number): void {
-		this.service.deleteUser(id);
+	removeUser(id: string): void {
+		this.removeDialog = !this.removeDialog;
+		this.userId = id;
+		this.listUsers = this.listUsers.filter(user => user.userId !== id);
 	}
 
 	closeView(isClosed: boolean): void {
@@ -42,4 +48,7 @@ export class ViewComponent implements OnInit {
 		this.closedDialog.emit(isClosed);		
 	}
 
+	onCloseRemoveDialog(isClosed: boolean): void {
+		this.removeDialog = isClosed;
+	}
 }

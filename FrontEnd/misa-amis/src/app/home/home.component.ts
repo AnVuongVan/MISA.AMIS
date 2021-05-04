@@ -16,25 +16,21 @@ import { User } from '../shared/user';
 	]
 })
 export class HomeComponent implements OnInit {
-	dropdownEnabled = true;
+	//dropdownEnabled = true;
 	items: TreeviewItem[];
 	rows: string[];
 	@ViewChild(TreeviewComponent, { static: false }) treeviewComponent: TreeviewComponent;
-	values: number[];
-	users: User[];
-	showDialog = false;
-	viewDialog = false;
+	//values: number[];
+	positionId: string;
+	showDialog: boolean = false;
+	viewDialog: boolean = false;
 
 	config = TreeviewConfig.create({		
 		decoupleChildFromParent: false,
 		maxHeight: 400
 	});
   
-	constructor(private service: UserService, private router: Router) {
-		let payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
-		let userRole = payLoad.role;
-		console.log(userRole);
-	}
+	constructor(public service: UserService, private router: Router) { }
   
 	ngOnInit(): void {
 		this.items = this.service.getTreePositions();
@@ -50,13 +46,8 @@ export class HomeComponent implements OnInit {
 	}
 
 	viewUser(id: string): void {
-		this.service.fetchUsers(id).subscribe(
-			res => this.users = res,
-			err => console.log(err)
-		);
-		setTimeout(() => {
-			this.viewDialog = !this.viewDialog;
-		}, 400);
+		this.positionId = id;
+		this.viewDialog = !this.viewDialog;
 	}
 
 	onCloseView(isClosed: boolean) {
