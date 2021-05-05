@@ -1,0 +1,12 @@
+[
+{"PositionId":"1961e19a-aae0-11eb-8a1f-00163e047e89","PositionName":"Bo giao duc\r\n","PositionParentId":"f06764ba-a3ec-11eb-a84b-56f2587c30ef","CreatedDate":"null","CreatedBy":"null","ModifiedDate":"5/2/2021","ModifiedBy":"null"},
+{"PositionId":"489a50a9-aae0-11eb-8a1f-00163e047e89","PositionName":"So giao duc","PositionParentId":"1961e19a-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"545ca31e-aae0-11eb-8a1f-00163e047e89","PositionName":"Phong giao duc","PositionParentId":"489a50a9-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"5e1321f4-aae0-11eb-8a1f-00163e047e89","PositionName":"Truong THPT Thuan Thanh 1","PositionParentId":"545ca31e-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"61fd9e0a-aae0-11eb-8a1f-00163e047e89","PositionName":"10A","PositionParentId":"5e1321f4-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"6657ab89-aae0-11eb-8a1f-00163e047e89","PositionName":"11A","PositionParentId":"5e1321f4-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"68e39af0-aae0-11eb-8a1f-00163e047e89","PositionName":"12A","PositionParentId":"5e1321f4-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"6c81d9e7-aae0-11eb-8a1f-00163e047e89","PositionName":"To 1","PositionParentId":"68e39af0-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"5/4/2021","ModifiedBy":"null"},
+{"PositionId":"7cea60d7-e044-485e-8d49-5538f3c34b01","PositionName":"To 1","PositionParentId":"6657ab89-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/5/2021","CreatedBy":"null","ModifiedDate":"5/5/2021","ModifiedBy":"null"},
+{"PositionId":"f06764ba-a3ec-11eb-a84b-56f2587c30ef","PositionName":"Root","PositionParentId":"00000000-0000-0000-0000-000000000000","CreatedDate":"5/2/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"},
+{"PositionId":"fdd2df11-e1c8-4db2-9b62-7ff011bcaf8b","PositionName":"To 2","PositionParentId":"68e39af0-aae0-11eb-8a1f-00163e047e89","CreatedDate":"5/5/2021","CreatedBy":"null","ModifiedDate":"null","ModifiedBy":"null"}]
