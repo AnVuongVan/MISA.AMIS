@@ -30,12 +30,16 @@ namespace MISA.AMIS.Core.Services
         }
 
         public override ServiceResult Delete(Guid id)
-        {
-            Task<TreeviewItem> treeviewItem = this.GetPositionById(id);          
-            foreach (TreeviewItem item in treeviewItem.Result.children)
+        {            
+            Task<TreeviewItem> treeviewItem = _positionRepository.GetPositionById(id);
+            dynamic result = treeviewItem.Result;
+            if (result.children.Count != 0)
             {
-                return this.Delete(item.value);               
-            }
+                foreach (TreeviewItem item in result.children)
+                {
+                    this.Delete(item.value);
+                }
+            }  
             return base.Delete(id);
         }
     }

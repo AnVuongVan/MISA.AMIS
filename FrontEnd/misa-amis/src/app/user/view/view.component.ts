@@ -12,6 +12,7 @@ export class ViewUserComponent implements OnInit {
 
 	@Input() positionId;
 
+	// Biến lưu danh sách người dùng theo vị trí
 	listUsers: User [];
 
 	userId: string;
@@ -22,23 +23,26 @@ export class ViewUserComponent implements OnInit {
 		this.listUsers = this.service.getUsersByPositionId(this.positionId);
 	}
 
+	/** Thêm người dùng */
 	addUser(id: string): void {
 		this.service.formData = new User();
 		this.service.formData.positionId = id;
 		this.service.editDialog = !this.service.editDialog;
 	}
 
+	/** Chỉnh sửa người dùng */
 	editUser(user: User): void {
 		this.service.formData = Object.assign({}, user);
 		this.service.editDialog = !this.service.editDialog;
 	}
 
+	/** Xóa người dùng */
 	removeUser(id: string): void {
 		this.service.removeDialog = !this.service.removeDialog;
 		this.userId = id;
-		//this.listUsers = this.listUsers.filter(user => user.userId !== id);
 	}
 
+	/** Đóng form xem danh sách người dùng */
 	closeView(): void {
 		this.service.viewDialog = !this.service.viewDialog;		
 	}

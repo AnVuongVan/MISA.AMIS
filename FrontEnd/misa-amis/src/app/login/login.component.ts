@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
+	/** Xử lý đăng nhập */
 	onSubmit(formLogin: NgForm) {
 		this.loading = true;
 		this.service.login(formLogin.value).subscribe(

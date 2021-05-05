@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
-import { TreeviewItem, TreeviewComponent, TreeviewConfig } from 'ngx-treeview';
+import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
 import { PositionService } from '../shared/position.service';
 import { Position } from '../shared/position';
 
@@ -12,8 +12,6 @@ import { Position } from '../shared/position';
 })
 
 export class HomeComponent implements OnInit {
-	/*items: TreeviewItem[];
-	@ViewChild(TreeviewComponent, { static: false }) treeviewComponent: TreeviewComponent;*/
 	positionId: string;
 	item: TreeviewItem;
 
@@ -26,19 +24,30 @@ export class HomeComponent implements OnInit {
 		private router: Router) { }
 		
 	ngOnInit(): void {
+		this.positionService.refreshTrees
+		.subscribe(() => {
+			this.getTreePositions();
+		});
+		this.getTreePositions();
+	}
+
+	private getTreePositions() {
 		this.positionService.items = this.positionService.getTreePositions();
 	}
 
+	/** Thêm vị trí, chức vụ */
 	addItem() {
 		this.positionService.formData = new Position();
 		this.positionService.editDialog = !this.positionService.editDialog;
 	}
 
+	/** Xem danh sách người dùng */
 	viewUser(id: string): void {
 		this.positionId = id;	
 		this.userService.viewDialog = !this.userService.viewDialog;
 	}
 
+	/** Chỉnh sửa vị trí, chức vụ */
 	editItem(item: TreeviewItem): void {
 		this.positionService.editDialog = !this.positionService.editDialog;
 		this.positionService.getPositionById(item.value).subscribe(
@@ -46,23 +55,10 @@ export class HomeComponent implements OnInit {
 		)
 	}
 	
+	/** Xóa vị trí, chức vụ */
 	removeItem(item: TreeviewItem): void {
 		this.positionService.removeDialog = !this.positionService.removeDialog;
-		//this.positionService.formData.positionId = item.value;
 		this.item = item;
-		
-		/*if (this.positionService.isRemoved) {
-			for (const tmpItem of this.items) {
-				if (tmpItem === item) {
-					remove(this.items, item);
-				} else {
-					if (TreeviewHelper.removeItem(tmpItem, item)) {
-						break;
-					}
-				}
-			}
-			this.treeviewComponent.raiseSelectedChange();
-		}*/
 	}
 
 	onLogout() {

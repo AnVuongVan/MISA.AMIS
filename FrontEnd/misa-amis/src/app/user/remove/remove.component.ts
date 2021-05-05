@@ -22,16 +22,19 @@ export class RemoveUserComponent implements OnInit {
 		);
 	}
 
+	/** Xóa người dùng */
 	removeUser() {
 		this.service.deleteUser(this.userId).subscribe(
 			res => console.log(res),
 			err => console.log(err)
 		)
+		
 		this.closeDialog();
 		this.service.viewDialog = !this.service.viewDialog;
 		this.toastr.success('Xóa người dùng thành công', 'Thông báo');
 	}
 
+	/** Đóng form xóa */
 	closeDialog(): void {
 		this.service.removeDialog = !this.service.removeDialog;
 	}

@@ -23,6 +23,7 @@ export class EditUserComponent implements OnInit {
 		this.positions = this.service.fetchPositions();
 	}
 
+	/** Xử lý thêm, sửa người dùng */
 	onSubmit(form: NgForm): void {
 		if (this.service.formData.userId) {
 			this.updateUser(form);
@@ -35,6 +36,7 @@ export class EditUserComponent implements OnInit {
 		this.service.viewDialog = !this.service.viewDialog;
 	}
 
+	/** Thêm người dùng */
 	insertUser(form: NgForm) {
 		this.service.postUser().subscribe(
 			res => {
@@ -47,6 +49,7 @@ export class EditUserComponent implements OnInit {
 		);
 	}
 
+	/** Chỉnh sửa người dùng */
 	updateUser(form: NgForm) {
 		this.service.putUser().subscribe(
 			res => {
@@ -59,11 +62,13 @@ export class EditUserComponent implements OnInit {
 		);
 	}
 
+	/** Reset form thêm, sửa */
 	resetForm(form: NgForm) {
 		form.reset();
 		this.service.formData = new User();
 	}
 
+	/** Đóng form thêm, sửa */
 	closeDialog(): void {
 		this.service.editDialog = !this.service.editDialog;		
 	}

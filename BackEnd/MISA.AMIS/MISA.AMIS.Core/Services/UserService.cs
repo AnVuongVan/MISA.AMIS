@@ -45,17 +45,7 @@ namespace MISA.AMIS.Core.Services
         }
 
         public IEnumerable<User> GetUsersByPositionId(Guid positionId)
-        {
-            /*var usersList = new List<User>();
-            var positionChildId = _userRepository.GetPositionChildId(positionId);
-            foreach (string item in positionChildId)
-            {
-                var users = _userRepository.GetUsersByPositionId(Guid.Parse(item));
-                foreach (User user in users)
-                {
-                    usersList.Add(user);
-                }
-            }*/
+        {           
             var usersList = _userRepository.GetUsersByPositionId(positionId);
             return usersList;
         }

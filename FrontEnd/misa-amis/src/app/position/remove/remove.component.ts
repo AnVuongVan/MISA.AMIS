@@ -18,13 +18,17 @@ export class RemovePositionComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	/** Xóa vị trí, chức vụ */
 	removePosition() {
 		this.service.deletePosition(this.item.value).subscribe(
 			res => console.log(res),
 			err => console.log(err)
 		)
+
 		this.closeDialog();
 		this.toastr.success('Xóa chức vụ thành công', 'Thông báo');
+
+		// Xóa node khỏi cây phân cấp
 		for (const tmpItem of this.service.items) {
 			if (tmpItem === this.item) {
 				remove(this.service.items, this.item);
@@ -36,6 +40,7 @@ export class RemovePositionComponent implements OnInit {
 		}
 	}
 
+	/** Đóng form xóa */
 	closeDialog(): void {
 		this.service.removeDialog = !this.service.removeDialog;
 	}

@@ -33,7 +33,7 @@ namespace MISA.AMIS.Controllers
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Get(string id)
         {
             var entity = _baseService.GetById(Guid.Parse(id));

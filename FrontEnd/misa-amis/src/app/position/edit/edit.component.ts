@@ -24,6 +24,7 @@ export class EditPositionComponent implements OnInit {
 		this.positions = this.service.fetchPositions();
 	}
 
+	/** Xử lý thêm, sửa vị trí, chức vụ */
 	onSubmit(form: NgForm): void {
 		if (this.service.formData.positionId) {
 			this.updatePosition(form);
@@ -35,6 +36,7 @@ export class EditPositionComponent implements OnInit {
 		this.closeDialog();
 	}
 
+	/** Thêm chức vụ, vị trí */
 	insertPosition(form: NgForm) {
 		this.service.postPosition().subscribe(
 			res => {
@@ -47,6 +49,7 @@ export class EditPositionComponent implements OnInit {
 		);
 	}
 
+	/** Chỉnh sửa chức vụ, vị trí */
 	updatePosition(form: NgForm) {
 		this.service.putPosition().subscribe(
 			res => {
@@ -59,10 +62,12 @@ export class EditPositionComponent implements OnInit {
 		);
 	}
 
+	/** Đóng form thêm, sửa */
 	closeDialog(): void {
 		this.service.editDialog = !this.service.editDialog;
 	}
 
+	/** Reset form sau khi thao tác */
 	resetForm(form: NgForm) {
 		form.reset();
 		this.service.formData = new Position();
