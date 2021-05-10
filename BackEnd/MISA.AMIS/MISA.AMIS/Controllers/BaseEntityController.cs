@@ -91,7 +91,7 @@ namespace MISA.AMIS.Controllers
 
         protected string GetPositionId()
         {
-            return this.User.Claims.First(i => i.Type == "PositionId").Value;
+            return this.User.Claims.FirstOrDefault(i => i.Type == "PositionId")?.Value;
         }
     }
 }

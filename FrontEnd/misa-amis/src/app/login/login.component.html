@@ -9,12 +9,12 @@
             <form #formLogin="ngForm" autocomplete="off" (submit)="onSubmit(formLogin)">
                 <div class="login-form-content">
                     <div class="wrap-input">
-                        <input type="text" #UserName="ngModel" name="UserName" 
+                        <input type="text" name="UserName" #UserName="ngModel"
                         [(ngModel)]="formModel.UserName" required 
                         class="input-control" placeholder="Tên đăng nhập" />
                     </div>
                     <div class="wrap-input">
-                        <input type="password" #Password="ngModel" name="Password"
+                        <input type="password" name="Password" #Password="ngModel"
                         [(ngModel)]="formModel.Password" required
                         class="input-control" placeholder="Mật khẩu">
                     </div>
